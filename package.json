@@ -1,0 +1,31 @@
+{
+  "name": "system-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A bot to scrape system info",
+  "author": "Ryan Schuhler <ryan.schuhler@liferay.com>",
+  "license": "ISC",
+  "repository": "https://github.com/ryanschuhler/system-bot.git",
+  "homepage": "https://github.com/ryanschuhler/system-bot",
+  "bugs": "https://github.com/ryanschuhler/system-bot/issues",
+  "keywords": [
+    "probot",
+    "github",
+    "probot-app"
+  ],
+  "scripts": {
+    "start": "probot run ./index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "probot": "^10.9.3"
+  },
+  "devDependencies": {
+    "jest": "^26.4.0",
+    "nock": "^13.0.4",
+    "smee-client": "^1.1.0"
+  },
+  "engines": {
+    "node": ">= 10.13.0"
+  }
+}
