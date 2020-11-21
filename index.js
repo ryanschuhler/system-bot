@@ -3,10 +3,27 @@
  * @param {import('probot').Application} app
  */
 module.exports = app => {
-  app.log.info('Yay, the app was loaded!')
+	app.on('push', async context => {
+		const sysInfoUrl = 'https://raw.githubusercontent.com/' + context.payload.repository.full_name + '/' + context.payload.repository.default_branch + '/system-info.yml';
+		context.log.info(sysInfoUrl);
 
-  app.on('push', async context => {
-    const issueComment = context.issue({ body: 'Thanks for opening this issue!!!' })
-    return context.github.issues.createComment(issueComment)
-  })
+		try {
+			const data = await context.octokit.repos.getContent({
+				method: 'HEAD',
+				owner: context.payload.repository.owner.name,
+				repo: context.payload.repository.name,
+				path: '/system-info.yml'
+			});
+			context.log.info(data);
+			context.log.info(yaml);
+			const file = yaml.load(Buffer.from(data.content, 'base64').toString()) || {};
+			context.log.info(file);
+		} catch (error) {
+			if (error.status === 404) {
+				context.log.info('file does not exist');
+			} else {
+				context.log.info('handle connection errors');
+			}
+		}
+	})
 }
